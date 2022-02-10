@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@testing-library/cypress": "^8.0.2",
+    "test-data-bot": "^0.8.0"
+  }
+}
