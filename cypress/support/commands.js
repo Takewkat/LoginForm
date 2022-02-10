@@ -1,10 +1,10 @@
-import {userBuilder} from './generate'
+import {userBuilder, validUser} from './data'
 /* createUser with VALID DATA
 Cypress.Commands.add('createUser', overrides => {
   const user = validUser(overrides);
   return cy
     .request({
-      url: 'https://app2.abtasty.com/login',
+      url: '/login',
       method: 'POST',
       body: user,
     })

@@ -1,11 +1,10 @@
+import {validUser} from '../support/data'
+
 //For Code 200 VALID DATA IS REQUIRED
 describe('API Code answers check', function () {
   // we can use these values to log in
-  const email = 'Valid email'
-  const password = 'Valid password'
 
   context('cy.request', () => {
-
     it('without authorization gets 401', () => {
       cy.request({
         url: '/login',
@@ -17,7 +16,7 @@ describe('API Code answers check', function () {
       cy.request({
         url: '/login',
         auth: {
-          email, password,
+          validUser
         },
       }).its('status').should('equal', 200)
       // to prove we have a session

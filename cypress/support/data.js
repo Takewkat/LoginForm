@@ -7,4 +7,9 @@ const userBuilder = build('User').fields({
   password: fake(f => f.internet.password()),
 })
 
-export {userBuilder}
+const validUser = {
+  email: 'Valid email',
+  password :'Valid password'
+}
+
+export {userBuilder, validUser}
