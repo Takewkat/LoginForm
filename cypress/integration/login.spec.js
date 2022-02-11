@@ -58,31 +58,10 @@ const doLocaleTests = dict => {
         // we should have visible error now
         cy.findByText(dict.validWarn)
       })  
-    })
-  
-    //TESTKEY FOR CAPTCHA REQUIRED 
-    //Test №11
-    /*describe('Captcha', () => {  
-      it('After 3 wrong attempts the Captcha is triggered', () => {    
-        cy.get('button').first().click(2)
-        cy.wait(500)
-        cy.confirmCaptcha()
-    })
-    })*/
-    //Test №12
-    describe('Eye button', () => {  
-      it('Eye button allow to show/hide the password input', () => {  
-        cy.visit('login') 
-        cy.get('[data-testid="password"]').get('[type=password]')
-        cy.get('[data-testid="visibleM"]').click()
-        cy.get('[data-testid="password"]').get('[type=text]')
-        cy.get('[data-testid="notVisibleM"]').click()
-        cy.get('[data-testid="password"]').get('[type=password]')
-      })
-    })
+    })  
     //Test №13
     describe('Sign in with SSO', () => {  
-      it('Click on the button - Sign in with SSO', () => {  
+      it('Click on the button - Sign in with SSO '+ dict.lang, () => {  
         cy.get('button').contains(dict.buttonSSO).click()
         cy.url().should('include', 'ssologin')
       })
@@ -103,21 +82,42 @@ const doLocaleTests = dict => {
         cy.url().should('include', 'login')
       })  
     })
-    //TESTS WITH VALID DATA
-    //VALID DATA SET REQUIRED
-    /*describe('login', () => {
-      it('should login an existing user', () => {
-        cy.createUser().then(user => {
-          cy.visit('/')
-          cy.get(('[data-testid="email"]').type(user.email)
-          cy.get('[data-testid="password"]').type(user.password)
-          cy.get('button').first().click()
-          cy.hash().should('eq', '#/')
-        })
-      })
-    })*/   // + all cases with Valid data (SSO, MFA and etc)
-  })
+  })  
 }
+
+//Test №12
+describe('Eye button', () => {  
+  it('Eye button allow to show/hide the password input', () => { 
+    cy.visit('login') 
+    cy.get('[data-testid="password"]').get('[type=password]')
+    cy.get('[data-testid="visibleM"]').click()
+    cy.get('[data-testid="password"]').get('[type=text]')
+    cy.get('[data-testid="notVisibleM"]').click()
+    cy.get('[data-testid="password"]').get('[type=password]')
+  })
+})  
+//TESTKEY FOR CAPTCHA REQUIRED 
+//Test №11
+/*describe('Captcha', () => {  
+  it('After 3 wrong attempts the Captcha is triggered', () => {    
+    cy.get('button').first().click(2)
+    cy.wait(500)
+    cy.confirmCaptcha()
+})
+})*/    
+//TESTS WITH VALID DATA
+//VALID DATA SET REQUIRED
+/*describe('login', () => {
+  it('should login an existing user', () => {
+    cy.createUser().then(user => {
+      cy.visit('/')
+      cy.get(('[data-testid="email"]').type(user.email)
+      cy.get('[data-testid="password"]').type(user.password)
+      cy.get('button').first().click()
+      cy.hash().should('eq', '#/')
+    })
+  })
+})*/   // + all cases with Valid data (SSO, MFA and etc)
 
 doLocaleTests(localeFr)
 doLocaleTests(localeEn)
