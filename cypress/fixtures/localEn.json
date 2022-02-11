@@ -1,0 +1,7 @@
+{
+  "lang": "en",
+  "buttonPass": "Send",
+  "validWarn": "Please enter a valid email or password",
+  "emailWarn": "Please enter a valid email",
+  "forgPass": "Forgot your password"
+}

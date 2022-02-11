@@ -1,72 +1,106 @@
+import localeFr from '../fixtures/localFr.json' 
+import localeEn from '../fixtures/localEn.json'
+
+//TESTS WITH DIFFERENT LANGUAGES
+const doLocaleTests = dict => {
+  describe(`Locale specific tests (${dict.lang})`, () => {
+    //Cypress hook - before
+    before(() => {
+      cy.visit('login', {
+        onBeforeLoad(win) {
+          Object.defineProperty(win.navigator, 'language', { value: `${dict.lang}-${dict.lang.toUpperCase()}` });
+          Object.defineProperty(win.navigator, 'languages', { value: [dict.lang] });
+          Object.defineProperty(win.navigator, 'accept_languages', { value: [dict.lang] });
+        },
+        headers: {
+          'Accept-Language': dict.lang,
+        },
+      });
+    })
+    //Test №6
+    describe('Reset your password'+ dict.lang, () => {  
+      it('click on the link - Forgot your password', () => {
+        cy.get('a').contains(dict.forgPass).click()        
+        //cy.findByText(dict.forgPass)
+        cy.url().should('include', 'reset-password')
+      })  
+    })
+    //Test №7
+    describe('Please enter a valid email'+ dict.lang, () => {  
+      it('Click on the button - Send me the password reset link', () => {  
+        
+        cy.get('button').contains(dict.buttonPass).click()
+        // we should have visible error now
+        cy.findByText(dict.emailWarn)
+      })  
+    })
+    //Test №8
+    describe('Sent!', () => {  
+      it('Click on the button - Send me the password reset link with email', () => { 
+        cy.get('input[name=email]').type('name@abtasty.com')
+        cy.get('button').contains(dict.buttonPass).click()
+        // we should have visible error now
+        cy.get('[data-testid="checkM"]')
+      })  
+    })
+    //Test №9
+    describe('Verify the arrow button', () => {  
+      it('Should Go back to email/password ', () => {  
+        
+        cy.get('[data-testid="leftArrowM"]').click()
+        // we should have visible error now
+        cy.url().should('include', 'login')
+      })  
+    })
+    //TESTS WITH FAKE DATA
+    //Test №10
+    describe('Error message'+ dict.lang, () => {  
+      it('An error message is displayed if email/password is wrong', () => {  
+        cy.clearCookies()
+        cy.fillInputs()
+        cy.get('button').first().click()
+
+        // we should have visible error now
+        cy.findByText(dict.validWarn)
+      })  
+    })
+  })
+}
+  //TESTKEY FOR CAPTCHA REQUIRED 
+  //Test №11
+  /*describe('Captcha', () => {  
+    it('After 3 wrong attempts the Captcha is triggered', () => {    
+      cy.get('button').first().click(2)
+      cy.wait(500)
+      cy.confirmCaptcha()
+  })
+  })*/
+
+  //Test №12
+  describe('Eye button', () => {  
+    it('Eye button allow to show/hide the password input', () => {  
+      cy.visit('login') 
+      cy.get('[data-testid="password"]').get('[type=password]')
+      cy.get('[data-testid="visibleM"]').click()
+      cy.get('[data-testid="password"]').get('[type=text]')
+      cy.get('[data-testid="notVisibleM"]').click()
+      cy.get('[data-testid="password"]').get('[type=password]')
+    })
+})
+
 //TESTS WITH VALID DATA
 //VALID DATA SET REQUIRED
 /*describe('login', () => {
   it('should login an existing user', () => {
     cy.createUser().then(user => {
       cy.visit('/')
-      cy.findByLabelText(('[data-testid="email"]').type(user.email)
-      cy.findByLabelText('[data-testid="password"]').type(user.password)
-      cy.findByText(/submit/i).click()
+      cy.get(('[data-testid="email"]').type(user.email)
+      cy.get('[data-testid="password"]').type(user.password)
+      cy.get('button').first().click()
       cy.hash().should('eq', '#/')
     })
   })
-})*////////////   + all cases with Valid data (SSO, MFA and etc)
+})*/   // + all cases with Valid data (SSO, MFA and etc)
 
-//TESTS WITH FAKE DATA
-//Test №6
-describe('Error message', () => {  
-  it('An error message is displayed if email/password is wrong', () => {  
-    cy.clearCookies()
-    cy.visit('/login')
-    cy.fillInputs()
-    cy.get('button').contains('Sign in').click()
-
-    // we should have visible error now
-    cy.findByText('Please enter a valid email or password')
-    cy.clearCookies()
-  })  
-})
-
-//TESTKEY FOR CAPTCHA REQUIRED 
-//Test №7
-/*describe('Captcha', () => {  
-  it('After 3 wrong attempts the Captcha is triggered', () => {    
-    cy.get('button').contains('Sign in').click(2)
-    cy.wait(500)
-    cy.confirmCaptcha()
-})
-})*/
-//Test №8
-describe('Eye button', () => {  
-  it('Eye button allow to show/hide the password input', () => {    
-    cy.get('[data-testid="password"]').get('[type=password]')
-    cy.get('[data-testid="visibleM"]').click()
-    cy.get('[data-testid="password"]').get('[type=text]')
-    cy.get('[data-testid="notVisibleM"]').click()
-    cy.get('[data-testid="password"]').get('[type=password]')
-})
-})
-//Test №9
-describe('Reset your password', () => {  
-  it('click on the link - Forgot your password', () => {   
-    cy.get('a').contains('Forgot your password').click()
-    cy.url().should('include', 'reset-password')
-  })  
-})
-//Test №10
-describe('Please enter a valid email', () => {  
-  it('Click on the button - Send me the password reset link', () => {  
-    cy.get('button').contains('Send me the password').click()
-    // we should have visible error now
-    cy.findByText('Please enter a valid email')
-  })  
-})
-//Test №11
-describe('Sent!', () => {  
-  it('Click on the button - Send me the password reset link with email', () => { 
-    cy.get('input[name=email]').type('name@abtasty.email')
-    cy.get('button').contains('Send me the password').click()
-    // we should have visible error now
-    cy.findByText('Sent!')
-  })  
-})
+doLocaleTests(localeFr)
+doLocaleTests(localeEn)
