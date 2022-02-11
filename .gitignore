@@ -4,3 +4,4 @@ coverage
 cypress/videos
 cypress/screenshots
 .eslintcache
+*.DS_Store
