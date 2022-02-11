@@ -1,0 +1,10 @@
+{
+  "lang": "en",
+  "forgPass": "Forgot your password",
+  "buttonPass": "Send",
+  "buttonSSO": "SSO",
+  "buttonSSOPass": "Sign",
+  "validWarn": "Please enter a valid email or password",
+  "emailWarn": "Please enter a valid email", 
+  "SSOWarn": "This email is not associated with any SSO"
+}

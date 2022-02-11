@@ -1,0 +1,10 @@
+{
+  "lang": "fr",
+  "forgPass": "Mot de passe oubli",
+  "buttonPass": "Envoyer",
+  "buttonSSO": "SSO",
+  "buttonSSOPass": "Se connect",
+  "validWarn": "Please enter a valid email or password",
+  "emailWarn": "Veuillez entrer un email valide", 
+  "SSOWarn": "Cet email"
+}

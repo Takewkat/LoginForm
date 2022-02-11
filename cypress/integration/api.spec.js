@@ -1,9 +1,8 @@
 import {validUser} from '../support/data'
-
+//Test №16
 //For Code 200 VALID DATA IS REQUIRED
 describe('API Code answers check', function () {
   // we can use these values to log in
-
   context('cy.request', () => {
     it('without authorization gets 401', () => {
       cy.request({
