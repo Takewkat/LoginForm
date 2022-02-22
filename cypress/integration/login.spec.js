@@ -38,13 +38,13 @@ const doLocaleTests = dict => {
         cy.get('input[name=email]').type('name@abtasty.com')
         cy.get('button').contains(dict.buttonPass).click()
         // we should have visible error now
-        cy.get('[data-testid="checkM"]')
+        cy.get('[data-testid="checkAloneIcon"]')
       })  
     })
     //Test №9
     describe('Verify the arrow button', () => {  
       it('Should Go back to email/password ', () => {         
-        cy.get('[data-testid="leftArrowM"]').click()
+        cy.get('[data-testid="chevronAloneLeftIcon"]').click()
         cy.url().should('include', 'login')
       })  
     })
@@ -78,7 +78,7 @@ const doLocaleTests = dict => {
     //Test №15
     describe('Verify the arrow button - SSO', () => {  
       it('Should Go back to email/password ', () => {      
-        cy.get('[data-testid="backArrowM"]').click()
+        cy.get('[data-testid="arrowAloneLeftIcon"]').click()
         cy.url().should('include', 'login')
       })  
     })
@@ -88,11 +88,18 @@ const doLocaleTests = dict => {
 //Test №12
 describe('Eye button', () => {  
   it('Eye button allow to show/hide the password input', () => { 
-    cy.visit('login') 
+    //reduce noise in console.log
+    const loginPath = 'login';
+    cy.location("pathname", { log: false }).then((currentPath) => {
+      if (currentPath !== loginPath) {
+        cy.visit(loginPath);
+      }
+    });
+    //cy.visit('login') 
     cy.get('[data-testid="password"]').get('[type=password]')
-    cy.get('[data-testid="visibleM"]').click()
+    cy.get('[data-testid="showIcon"]').click()
     cy.get('[data-testid="password"]').get('[type=text]')
-    cy.get('[data-testid="notVisibleM"]').click()
+    cy.get('[data-testid="hideIcon"]').click()
     cy.get('[data-testid="password"]').get('[type=password]')
   })
 })  
